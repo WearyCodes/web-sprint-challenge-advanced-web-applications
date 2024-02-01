@@ -35,12 +35,20 @@ export default function App() {
   }
 
   const login = ({ username, password }) => {
+    const userObject = {
+      username: username,
+      password: password
+    }
     // ✨ implement
     // We should flush the message state, turn on the spinner
     // and launch a request to the proper endpoint.
     // On success, we should set the token to local storage in a 'token' key,
     // put the server success message in its proper state, and redirect
     // to the Articles screen. Don't forget to turn off the spinner!
+    setMessage('')
+    axios.post('http://localhost:9000/api/login', userObject)
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
   }
 
   const getArticles = () => {
