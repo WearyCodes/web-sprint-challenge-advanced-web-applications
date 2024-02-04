@@ -76,7 +76,8 @@ export default function App() {
     axios.get('http://localhost:9000/api/articles', {headers: {authorization: token}})
     .then(res => {console.log(res)
       setArticles(res.data.articles)
-    setSpinnerOn(false)}
+    setSpinnerOn(false)
+  setMessage(res.data.message)}
     )
     .catch(err => console.log(err))
   }
