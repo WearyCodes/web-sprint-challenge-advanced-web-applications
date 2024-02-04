@@ -6,6 +6,7 @@ import Message from './Message'
 import ArticleForm from './ArticleForm'
 import Spinner from './Spinner'
 import axios from 'axios'
+import { axiosWithAuth } from '../axios'
 
 const articlesUrl = 'http://localhost:9000/api/articles'
 const loginUrl = 'http://localhost:9000/api/login'
@@ -96,14 +97,16 @@ export default function App() {
   // - The `topic` needs to be one of three values: `React`, `JavaScript`, `Node`
   // - Example of payload: `{ "title": "foo", "text": "bar", "topic": "React" }`
   // - The response to a proper request includes `201 Created`, a success message and the new article
-if (((article.text.trim().length >= 1) && (article.title.trim().length >= 1)) && (article.topic == ('React' || 'JavaScript' || 'Node'))){
-  axios.post('http://localhost:9000/api/articles', {headers: {authorization: token}}, {
+
+  axios.post('http://localhost:9000/api/articles', {
     title: article.title,
     text: article.text,
     topic: article.topic
+  }, {headers: {Authorization: token}})
+  .then(res => {console.log(res)
+  setMessage(res.data.message)
   })
-  .then()
-  .catch()}
+  .catch(err => console.log(err))
   }
 
   const updateArticle = ({ article_id, article }) => {
@@ -131,7 +134,7 @@ if (((article.text.trim().length >= 1) && (article.title.trim().length >= 1)) &&
           <Route path="/" element={<LoginForm login={login}/>} />
           <Route path="articles" element={
             <>
-              <ArticleForm />
+              <ArticleForm postArticle={postArticle}/>
               <Articles articles={articles} getArticles={getArticles}/>
             </>
           } />
