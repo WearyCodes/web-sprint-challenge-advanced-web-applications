@@ -95,9 +95,7 @@ export default function App() {
     topic: article.topic
   }, {headers: {Authorization: token}})
   .then(res => {console.log(res)
-
   setMessage(res.data.message)
-
   })
   .catch(err => console.log(err))
   }
