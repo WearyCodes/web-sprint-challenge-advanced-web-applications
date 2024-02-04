@@ -95,6 +95,7 @@ export default function App() {
     topic: article.topic
   }, {headers: {Authorization: token}})
   .then(res => {console.log(res)
+    setArticles([...articles, res.data.article])
   setMessage(res.data.message)
   })
   .catch(err => console.log(err))
