@@ -89,22 +89,15 @@ export default function App() {
     // The flow is very similar to the `getArticles` function.
     // You'll know what to do! Use log statements or breakpoints
     // to inspect the response from the server.
-
-  //   - `[POST] http://localhost:9000/api/articles`
-  // - Expects an `Authorization` request header containing a valid auth token
-  // - Expects a payload with the following properties: `title`, `text`, `topic`
-  // - The `title` and `text` length must be >= 1, after trimming
-  // - The `topic` needs to be one of three values: `React`, `JavaScript`, `Node`
-  // - Example of payload: `{ "title": "foo", "text": "bar", "topic": "React" }`
-  // - The response to a proper request includes `201 Created`, a success message and the new article
-
   axios.post('http://localhost:9000/api/articles', {
     title: article.title,
     text: article.text,
     topic: article.topic
   }, {headers: {Authorization: token}})
   .then(res => {console.log(res)
+
   setMessage(res.data.message)
+
   })
   .catch(err => console.log(err))
   }
@@ -134,7 +127,7 @@ export default function App() {
           <Route path="/" element={<LoginForm login={login}/>} />
           <Route path="articles" element={
             <>
-              <ArticleForm postArticle={postArticle}/>
+              <ArticleForm postArticle={postArticle} getArticles={getArticles}/>
               <Articles articles={articles} getArticles={getArticles}/>
             </>
           } />
