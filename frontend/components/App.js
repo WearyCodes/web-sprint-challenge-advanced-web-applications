@@ -102,12 +102,38 @@ export default function App() {
   }
 
   const updateArticle = ({ article_id, article }) => {
+    const token = localStorage.getItem('token')
     // ✨ implement
     // You got this!
+
+  //   - `[PUT] http://localhost:9000/api/articles/:article_id`
+  // - Expects an `Authorization` request header containing a valid auth token
+  // - Expects a payload with the following properties: `title`, `text`, `topic`
+  // - The `title` and `text` length must be >= 1, after trimming
+  // - The `topic` needs to be one of three values: `React`, `JavaScript`, `Node`
+  // - Example of payload: `{ "title": "foo", "text": "bar", "topic": "React" }`
+  // - The response to a proper request includes `200 OK`, a success message and the updated article
+  axios.put(`http://localhost:9000/api.articles/${article_id}`, {
+    article
+  }, {headers: {Authorization: token}})
+  .then(res => console.log(res))
+  .catch(err => console.log(err))
   }
 
   const deleteArticle = article_id => {
+    const token = localStorage.getItem('token')
+    console.log(article_id)
     // ✨ implement
+    axios.delete(`http://localhost:9000/api/articles/${article_id}`, {headers: {Authorization: token}})
+    .then(res => {console.log(res)
+      axios.get('http://localhost:9000/api/articles', {headers: {authorization: token}})
+      .then(res => {console.log(res)
+        setArticles(res.data.articles)}
+      )
+      .catch(err => console.log(err))
+    setMessage(res.data.message)}
+    )
+    .catch(err => console.log(err))
   }
 
   return (
@@ -126,8 +152,8 @@ export default function App() {
           <Route path="/" element={<LoginForm login={login}/>} />
           <Route path="articles" element={
             <>
-              <ArticleForm postArticle={postArticle} getArticles={getArticles}/>
-              <Articles articles={articles} getArticles={getArticles}/>
+              <ArticleForm postArticle={postArticle} getArticles={getArticles} updateArticle={updateArticle}/>
+              <Articles articles={articles} getArticles={getArticles} setCurrentArticleId={setCurrentArticleId} deleteArticle={deleteArticle}/>
             </>
           } />
         </Routes>
