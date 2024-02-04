@@ -54,6 +54,7 @@ export default function App() {
       console.log(res)
       localStorage.setItem('token', res.data.token)
       setMessage(res.data.message)
+      navigate('/articles')
       setSpinnerOn(false)
     })
     .catch(err => console.log(err))
