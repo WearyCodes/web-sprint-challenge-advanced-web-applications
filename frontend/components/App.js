@@ -74,7 +74,10 @@ export default function App() {
     setMessage('')
     setSpinnerOn(true)
     axios.get('http://localhost:9000/api/articles', {headers: {authorization: token}})
-    .then(res => setArticles(res.data.articles))
+    .then(res => {console.log(res)
+      setArticles(res.data.articles)
+    setSpinnerOn(false)}
+    )
     .catch(err => console.log(err))
   }
 
@@ -111,7 +114,7 @@ export default function App() {
           <Route path="articles" element={
             <>
               <ArticleForm />
-              <Articles articles={articles}/>
+              <Articles articles={articles} getArticles={getArticles}/>
             </>
           } />
         </Routes>
