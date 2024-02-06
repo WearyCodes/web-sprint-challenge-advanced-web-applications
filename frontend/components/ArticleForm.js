@@ -41,6 +41,7 @@ export default function ArticleForm(props) {
     else {
       console.log('onSubmit', currentArticleId, values)
       updateArticle({article_id: currentArticleId, article: values})
+      setValues(initialFormValues)
     }
   }
 
