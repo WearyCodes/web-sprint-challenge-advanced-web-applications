@@ -101,11 +101,11 @@ export default function App() {
   .catch(err => console.log(err))
   }
 
-  const updateArticle = ({ article_id, article }) => {
+  const updateArticle = ({article_id, article }) => {
     const token = localStorage.getItem('token')
     // ✨ implement
     // You got this!
-
+    console.log('update', article_id, article)
   //   - `[PUT] http://localhost:9000/api/articles/:article_id`
   // - Expects an `Authorization` request header containing a valid auth token
   // - Expects a payload with the following properties: `title`, `text`, `topic`
@@ -113,10 +113,15 @@ export default function App() {
   // - The `topic` needs to be one of three values: `React`, `JavaScript`, `Node`
   // - Example of payload: `{ "title": "foo", "text": "bar", "topic": "React" }`
   // - The response to a proper request includes `200 OK`, a success message and the updated article
-  axios.put(`http://localhost:9000/api.articles/${article_id}`, {
-    article
-  }, {headers: {Authorization: token}})
-  .then(res => console.log(res))
+  axios.put(`http://localhost:9000/api/articles/${article_id}`, article, {headers: {Authorization: token}})
+  .then(res => {console.log(res)
+  setMessage(res.data.message)
+  axios.get('http://localhost:9000/api/articles', {headers: {authorization: token}})
+  .then(res => {console.log(res)
+    setArticles(res.data.articles)}
+  )
+  .catch(err => console.log(err))
+  })
   .catch(err => console.log(err))
   }
 

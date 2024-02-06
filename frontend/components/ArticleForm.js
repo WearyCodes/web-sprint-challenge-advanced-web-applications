@@ -35,8 +35,13 @@ export default function ArticleForm(props) {
     // ✨ implement
     // We must submit a new post or update an existing one,
     // depending on the truthyness of the `currentArticle` prop.
+    if(!currentArticleId){
     postArticle(values)
-    setValues(initialFormValues)
+    setValues(initialFormValues)}
+    else {
+      console.log('onSubmit', currentArticleId, values)
+      updateArticle({article_id: currentArticleId, article: values})
+    }
   }
 
   const isDisabled = () => {
@@ -51,7 +56,7 @@ export default function ArticleForm(props) {
     // ✨ fix the JSX: make the heading display either "Edit" or "Create"
     // and replace Function.prototype with the correct function
     <form id="form" onSubmit={onSubmit}>
-      <h2>Create Article</h2>
+      <h2>{currentArticleId ? 'Edit' : 'Create'} Article</h2>
       <input
         maxLength={50}
         onChange={onChange}
@@ -74,7 +79,7 @@ export default function ArticleForm(props) {
       </select>
       <div className="button-group">
         <button disabled={isDisabled()} id="submitArticle">Submit</button>
-        <button onClick={Function.prototype}>{currentArticleId && 'cancel'} edit</button>
+        <button onClick={() => {console.log('this shouldnt do shit')}}>{currentArticleId && 'cancel'} edit</button>
       </div>
     </form>
   )
